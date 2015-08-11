@@ -52,8 +52,8 @@ function callApi(endpoint, schema) {
 // Read more about Normalizr: https://github.com/gaearon/normalizr
 
 const userSchema = new Schema('users', { idAttribute: 'login' });
-const repoSchema = new Schema('repos', { idAttribute: 'fullName' });
-repoSchema.define({
+const repositorySchema = new Schema('repositories', { idAttribute: 'fullName' });
+repositorySchema.define({
   owner: userSchema
 });
 
@@ -63,8 +63,8 @@ repoSchema.define({
 export const Schemas = {
   USER: userSchema,
   USER_ARRAY: arrayOf(userSchema),
-  REPOSITORY: repoSchema,
-  REPOSITORY_ARRAY: arrayOf(repoSchema)
+  REPOSITORY: repositorySchema,
+  REPOSITORY_ARRAY: arrayOf(repositorySchema)
 };
 
 /**

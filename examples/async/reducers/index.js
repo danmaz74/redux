@@ -20,10 +20,15 @@ function table(state = {}, fetchedTable) {
   return nextState;
 }
 
+const initialState = {
+  users: {},
+  repositories: {}
+};
+
 /**
  * Updates a local database in response to any action containing response.entities.
  */
-export function database(state = {}, action) {
+export function database(state = initialState, action) {
   if (!action.response || !action.response.entities) {
     return state;
   }
