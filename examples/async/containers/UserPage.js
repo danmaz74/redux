@@ -22,7 +22,7 @@ class UserPage extends Component {
 
     return (
       <div>
-        <User {...user} />
+        <User user={user} />
       </div>
     );
   }
@@ -52,7 +52,7 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 
 function fetchData(userLogin) {
   return dispatch => {
-    dispatch(fetchUser(userLogin));
+    dispatch(fetchUser(userLogin, ['name']));
   }
 }
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 export default class User extends Component {
   render() {
-    const { login, avatarUrl, name } = this.props;
+    const { login, avatarUrl, name } = this.props.user;
 
     return (
       <div className='User'>
@@ -19,7 +19,9 @@ export default class User extends Component {
 }
 
 User.propTypes = {
-  login: PropTypes.string.isRequired,
-  avatarUrl: PropTypes.string.isRequired,
-  name: PropTypes.string
+  user: PropTypes.shape({
+    login: PropTypes.string.isRequired,
+    avatarUrl: PropTypes.string.isRequired,
+    name: PropTypes.string
+  }).isRequired
 };

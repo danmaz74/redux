@@ -87,7 +87,7 @@ export default store => next => action => {
     return next(action);
   }
 
-  const { endpoint, schema, types } = callAPI;
+  const { endpoint, schema, types, bailout } = callAPI;
   if (typeof endpoint !== 'string') {
     throw new Error('Specify a string endpoint URL.');
   }
@@ -99,6 +99,13 @@ export default store => next => action => {
   }
   if (!types.every(type => typeof type === 'string')) {
     throw new Error('Expected action types to be strings.'); 
+  }
+  if (typeof bailout !== 'undefined' && typeof bailout !== 'function') {
+    throw new Error('Expected bailout to either be undefined or a function.');
+  }
+
+  if (bailout(store.getState())) {
+    return Promise.resolve();
   }
 
   function actionWith(data) {

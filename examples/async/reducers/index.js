@@ -36,7 +36,8 @@ export function database(state = initialState, action) {
   }
 
   const fetchedTables = action.response.entities;
-  let nextState = {};
+
+  let nextState = Object.assign({}, state);
   Object.keys(fetchedTables).forEach(key =>
     nextState[key] = table(state[key], fetchedTables[key])
   );
