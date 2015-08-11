@@ -1,3 +1,5 @@
+import { RESET_ERROR_MESSAGE } from '../actions';
+
 /**
  * Updates a single local entity with new data.
  */
@@ -39,4 +41,18 @@ export function database(state = initialState, action) {
     nextState[key] = table(state[key], fetchedTables[key])
   );
   return nextState;
+}
+
+
+/**
+ * Updates error message to notify about the failed fetches.
+ */
+export function errorMessage(state = null, action) {
+  if (action.type === RESET_ERROR_MESSAGE) {
+    return null;
+  } else if (action.error) {
+    return action.error;
+  }
+
+  return state;
 }

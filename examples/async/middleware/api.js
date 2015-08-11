@@ -30,8 +30,14 @@ function callApi(endpoint, schema) {
     endpoint = API_ROOT + endpoint;
   }
 
-  return fetch(endpoint).then(response =>
-    response.json().then(json => {
+  return fetch(endpoint)
+    .then(response =>
+      response.json().then(json => ({ json, response}))
+    ).then(({ json, response }) => {
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+
       const camelizedJson = camelizeKeys(json);
       const nextPageUrl = getNextPageUrl(response) || undefined;
 
@@ -39,8 +45,7 @@ function callApi(endpoint, schema) {
         ...normalize(camelizedJson, schema),
         nextPageUrl
       };
-    })
-  );
+    });
 }
 
 // We use this Normalizr schemas to transform API responses from a nested form
@@ -112,7 +117,7 @@ export default store => next => action => {
     })),
     error => next(actionWith({
       type: failureType,
-      error
+      error: error.message || 'Something bad happened'
     }))
   );
 };
